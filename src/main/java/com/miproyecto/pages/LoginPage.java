@@ -12,9 +12,9 @@ public class LoginPage {
     private WebDriverWait wait;
 
     // Elementos
-    private By usernameInput = By.name("username");
-    private By userpassword = By.cssSelector("input[type='password']");
-    private By submitButton = By.cssSelector("button[type='submit']");
+    private By usernameInput = By.id("username");
+    private By userpassword = By.id("password");
+    private By submitButton = By.id("log-in");
 
 
     // Constructor
