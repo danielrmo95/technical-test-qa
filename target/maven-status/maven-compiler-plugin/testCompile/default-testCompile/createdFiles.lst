@@ -1,1 +1,3 @@
+com\miproyecto\tests\ReqresApiTest.class
 com\miproyecto\tests\LogicaUtilsTest.class
+com\miproyecto\tests\TestLoginAndHome.class

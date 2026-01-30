@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.miproyecto.tests.TestLoginAndHome
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.01 s -- in com.miproyecto.tests.TestLoginAndHome
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.059 s -- in com.miproyecto.tests.TestLoginAndHome
