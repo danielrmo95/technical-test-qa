@@ -1,3 +1,8 @@
 com\miproyecto\tests\ReqresApiTest.class
+com\miproyecto\bdd\hooks\Hooks.class
 com\miproyecto\tests\LogicaUtilsTest.class
 com\miproyecto\tests\TestLoginAndHome.class
+com\miproyecto\runner\CucumberRunnerTest.class
+com\miproyecto\bdd\steps\ApiReqresSteps.class
+com\miproyecto\bdd\steps\LoginHomeSteps.class
+com\miproyecto\bdd\context\TestContext.class

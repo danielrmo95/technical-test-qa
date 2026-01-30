@@ -45,6 +45,24 @@
         <version>7.11.0</version>
         <scope>test</scope>
     </dependency>
+    <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-suite-api</artifactId>
+        <version>1.9.3</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-suite-engine</artifactId>
+        <version>1.9.3</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-launcher</artifactId>
+        <version>1.9.3</version>
+        <scope>test</scope>
+    </dependency>
 
     <!-- otras dependencias -->
     <dependency>
@@ -79,6 +97,21 @@
                     </configuration>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.2.5</version>
+                    <configuration>
+                        <excludes>
+                            <exclude>**/CucumberRunnerTest.java</exclude>
+                        </excludes>
+                        <properties>
+                            <configurationParameters>
+                                junit.jupiter.execution.parallel.enabled=false
+                            </configurationParameters>
+                        </properties>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
                     <version>1.6.0</version>
@@ -95,4 +128,71 @@
                 </plugin>
             </plugins>
         </build>
+        <profiles>
+            <profile>
+                <id>bdd</id>
+                <build>
+                    <plugins>
+                        <!-- Omitir Surefire en BDD para que solo se ejecute Cucumber y se generen reportes -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-plugin</artifactId>
+                            <version>3.2.5</version>
+                            <configuration>
+                                <skipTests>true</skipTests>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-antrun-plugin</artifactId>
+                            <version>3.1.0</version>
+                            <executions>
+                                <execution>
+                                    <id>create-reports-dir</id>
+                                    <phase>generate-test-resources</phase>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <configuration>
+                                        <target>
+                                            <mkdir dir="${project.basedir}/target/reports"/>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>exec-maven-plugin</artifactId>
+                            <version>3.1.0</version>
+                            <executions>
+                                <execution>
+                                    <id>cucumber</id>
+                                    <phase>test</phase>
+                                    <goals>
+                                        <goal>java</goal>
+                                    </goals>
+                                    <configuration>
+                                        <mainClass>io.cucumber.core.cli.Main</mainClass>
+                                        <workingDirectory>${project.basedir}</workingDirectory>
+                                        <arguments>
+                                            <argument>--glue</argument>
+                                            <argument>classpath:com.miproyecto.bdd</argument>
+                                            <argument>--plugin</argument>
+                                            <argument>pretty</argument>
+                                            <argument>--plugin</argument>
+                                            <argument>html:target/reports/cucumber-report.html</argument>
+                                            <argument>--plugin</argument>
+                                            <argument>json:target/reports/cucumber.json</argument>
+                                            <argument>classpath:com/miproyecto/features</argument>
+                                        </arguments>
+                                        <classpathScope>test</classpathScope>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </build>
+            </profile>
+        </profiles>
     </project>

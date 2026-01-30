@@ -148,6 +148,27 @@ target/
     └── surefire-report.html    # Reporte HTML generado
 ```
 
+## Tests BDD (Cucumber)
+
+El proyecto incluye escenarios BDD en Gherkin (español) `src/test/resources/com/miproyecto/features/` con los casos de prueba de los puntos 1 y 2.
+
+**Forma recomendada de ejecutar los tests BDD** (perfil Maven, sin Suite):
+
+```bash
+mvn test -Pbdd
+```
+
+Con esto se ejecuta Cucumber por línea de comandos y se evita el error "TestEngine with ID 'junit-platform-suite' failed to discover tests".
+
+**Nota:** Por defecto, `mvn test` ejecuta todos los tests **excepto** el runner de Cucumber (CucumberRunnerTest), para que la build no falle. Los escenarios BDD se ejecutan con el perfil `bdd`.
+
+**Dónde ver el reporte de Cucumber:** después de ejecutar `mvn test -Pbdd`, el reporte HTML se genera en:
+
+- **HTML:** `target/reports/cucumber-report.html` (ábrelo en el navegador)
+- **JSON:** `target/reports/cucumber.json`
+
+Si aparece **AccessDeniedException** al copiar los `.feature` a `target`, cierra el IDE o ejecuta `mvn clean` antes.
+
 ## Notas importantes
 
 - Los tests de UI necesitan que tengas Chrome instalado
